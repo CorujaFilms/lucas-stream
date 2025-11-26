@@ -34,17 +34,39 @@
     .controls{display:flex;gap:10px;margin-top:12px}
     .control-btn{padding:8px 12px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
 
-    /* Chat panel */
-    .side{display:flex;flex-direction:column;gap:12px}
-    .chat{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:12px;border-radius:10px;height:66vh;overflow:auto;border:1px solid rgba(255,255,255,0.03)}
-    .msg{margin-bottom:10px}
-    .msg .who{font-weight:700;font-size:13px}
-    .msg .txt{font-size:14px;color:#eaf2ff}
-    .chat-input{display:flex;gap:8px;margin-top:6px}
-    .chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    .send{padding:10px 12px;border-radius:8px;border:none;background:var(--accent);color:#081017;font-weight:700}
+    /* Playlist vertical */
+    .playlist-vertical{
+      background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
+      padding:12px;
+      border-radius:10px;
+      height:66vh;
+      overflow:auto;
+      border:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
 
-    /* Playlist */
+    .pv-item{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:8px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.03);
+      cursor:pointer;
+    }
+    .pv-item img{
+      width:80px;
+      height:50px;
+      object-fit:cover;
+      border-radius:6px;
+    }
+    .pv-title{font-size:13px;font-weight:600}
+    .pv-sub{font-size:12px;color:var(--muted)}
+
+    /* Playlist bottom grid */
     .playlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:20px}
     .thumb{display:flex;gap:8px;align-items:center;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
     .thumb img{width:120px;height:68px;object-fit:cover;border-radius:6px}
@@ -58,7 +80,6 @@
     }
     @media (max-width:720px){
       .layout{grid-template-columns:1fr}
-      .side{order:2}
       .player iframe{height:48vh}
     }
   </style>
@@ -83,13 +104,15 @@
     <section>
       <div class="player-card">
         <div class="player" id="player">
-          <!-- Substitua o src abaixo pelo link embed do YouTube: https://www.youtube.com/embed/SEU_ID -->
           <iframe id="mainVideo" src="https://www.youtube.com/embed/COLOQUE_AQUI" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
 
         <div class="meta">
           <div class="left">
-            <div class="avatar"><img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=800&q=80" alt="avatar"/></div>
+            <div class="avatar">
+              <!-- SUA FOTO AQUI DEPOIS -->
+              <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=800&q=80" alt="avatar"/>
+            </div>
             <div>
               <h1>Lucas Victor — Sessão Acústica</h1>
               <p>Ao vivo • 1.2K visualizações</p>
@@ -101,51 +124,54 @@
         </div>
 
         <div class="controls">
-          <button class="control-btn">🔀 Playlist</button>
-          <button class="control-btn">🎧 Qualidade</button>
+          <button class="control-btn">🎵 Playlist</button>
+          <button class="control-btn">⚙️ Qualidade</button>
           <button class="control-btn">📅 Agenda</button>
         </div>
 
+        <!-- PLAYLIST INFERIOR -->
         <div class="playlist" id="playlist">
-          <!-- Duplicar blocos thumb e substituir os src -->
           <div class="thumb" onclick="loadVideo('COLOQUE_AQUI_2')">
             <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&q=60" alt="thumb"/>
-            <div class="info"><b>Música 1 — Cover</b><span>3:42 • sessão</span></div>
+            <div class="info"><b>Amor de Verão — Lucas Victor</b><span>3:42 • acústico</span></div>
           </div>
 
           <div class="thumb" onclick="loadVideo('COLOQUE_AQUI_3')">
             <img src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?w=800&q=60" alt="thumb"/>
-            <div class="info"><b>Música 2 — Orig.</b><span>4:05 • sessão</span></div>
+            <div class="info"><b>Pais e Filhos — Lucas Victor</b><span>4:05 • versão</span></div>
           </div>
 
           <div class="thumb" onclick="loadVideo('COLOQUE_AQUI_4')">
             <img src="https://images.unsplash.com/photo-1526178611236-1802f3efb8b0?w=800&q=60" alt="thumb"/>
-            <div class="info"><b>Música 3 — Acústico</b><span>2:58 • sessão</span></div>
+            <div class="info"><b>Sozinho — Lucas Victor</b><span>2:58 • voz & violão</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <aside class="side">
-      <div class="chat" id="chat">
-        <div class="msg"><div class="who">João</div><div class="txt">Que voz, mano! 🔥</div></div>
-        <div class="msg"><div class="who">Marina</div><div class="txt">Repeti o refrão lol</div></div>
-        <div class="msg"><div class="who">André</div><div class="txt">Qual a cifra dessa?</div></div>
-      </div>
-
-      <div>
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><strong>Próximas</strong><span style="color:var(--muted);font-size:13px">Sessões + playlists</span></div>
-        <div style="display:grid;gap:8px">
-          <div style="padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)">Sessão: Voz & Violão — 29/11</div>
-          <div style="padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)">Sessão: Banda — 06/12</div>
+    <!-- PLAYLIST VERTICAL -->
+    <aside class="playlist-vertical">
+      <div class="pv-item" onclick="loadVideo('COLOQUE_AQUI_2')">
+        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&q=60">
+        <div>
+          <div class="pv-title">Amor de Verão — Lucas Victor</div>
+          <div class="pv-sub">3:42</div>
         </div>
       </div>
 
-      <div style="margin-top:auto">
-        <div style="font-size:13px;color:var(--muted);margin-bottom:6px">Entrar na lista VIP</div>
-        <div style="display:flex;gap:8px">
-          <input placeholder="seu@email.com" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit"/>
-          <button class="send">Entrar</button>
+      <div class="pv-item" onclick="loadVideo('COLOQUE_AQUI_3')">
+        <img src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?w=800&q=60">
+        <div>
+          <div class="pv-title">Pais e Filhos — Lucas Victor</div>
+          <div class="pv-sub">4:05</div>
+        </div>
+      </div>
+
+      <div class="pv-item" onclick="loadVideo('COLOQUE_AQUI_4')">
+        <img src="https://images.unsplash.com/photo-1526178611236-1802f3efb8b0?w=800&q=60">
+        <div>
+          <div class="pv-title">Sozinho — Lucas Victor</div>
+          <div class="pv-sub">2:58</div>
         </div>
       </div>
     </aside>
@@ -155,7 +181,6 @@
     function loadVideo(id){
       const iframe = document.getElementById('mainVideo');
       iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
-      // rolagem suave pro player
       window.scrollTo({top:0,behavior:'smooth'});
     }
   </script>
